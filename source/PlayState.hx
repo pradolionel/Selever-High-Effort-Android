@@ -368,32 +368,31 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'stage': //Week 1
-				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
+			case 'stage': //GOSPEL
+			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('sacredmass/gospelshit/bg'));
+				bg.antialiasing = true;
+				bg.scrollFactor.set(0.9, 0.9);
+				bg.active = false;
 				add(bg);
 
-				var stageFront:BGSprite = new BGSprite('stagefront', -650, 600, 0.9, 0.9);
-				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-				stageFront.updateHitbox();
-				add(stageFront);
+				var pillars:FlxSprite = new FlxSprite(60.15, 130.1).loadGraphic(Paths.image('sacredmass/gospelshit/circ1'));
+				pillars.antialiasing = true;
+				pillars.scrollFactor.set(0.9, 0.9);
+				pillars.active = false;
+				pillars.updateHitbox();
+				add(pillars);
+				
+				FlxTween.angle(pillars, 0, 180, 3);
+				
+				new FlxTimer().start(3, function(tmr:FlxTimer)
+				{
+					if(pillars.angle == 180)
+						FlxTween.angle(pillars, 0, 180, 3);
+					else
+						FlxTween.angle(pillars, 180, 359, 3);
+				}, 0);
 
-				if(!ClientPrefs.lowQuality) {
-					var stageLight:BGSprite = new BGSprite('stage_light', -125, -100, 0.9, 0.9);
-					stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
-					stageLight.updateHitbox();
-					add(stageLight);
-					var stageLight:BGSprite = new BGSprite('stage_light', 1225, -100, 0.9, 0.9);
-					stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
-					stageLight.updateHitbox();
-					stageLight.flipX = true;
-					add(stageLight);
-
-					var stageCurtains:BGSprite = new BGSprite('stagecurtains', -500, -300, 1.3, 1.3);
-					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-					stageCurtains.updateHitbox();
-					add(stageCurtains);
-				}
-
+			}
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
 					halloweenBG = new BGSprite('halloween_bg', -200, -100, ['halloweem bg0', 'halloweem bg lightning strike']);
